@@ -32,6 +32,28 @@ div.title {
     <script>
 
 
+(async function() {
+    const up = csv2json(await fetch('./timatable/상행.csv').then((res) => res.text()));
+    const down = csv2json(await fetch('./timatable/하행.csv').then((res) => res.text()));
+
+
+    
+})();
+
+function csv2json(csv) {
+    csv = csv.trim().split('\n');
+    const stns = csv.shift().trim().split(',');
+    stns.shift();
+    const json = {};
+    csv.forEach((e) => {
+        e = e.trim().split(',');
+        const no = e.shift();
+        json[no] = [];
+        e.forEach((e, i) => json[no].push({stn: stns[i], time: e}));
+    });
+    return json;
+}
+
     </script>
 </body>
 </html>
